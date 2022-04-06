@@ -5,11 +5,11 @@ error_reporting(~E_WARNING);
 
 //Create a UDP socket
 $sock = socket_create(AF_INET, SOCK_DGRAM, 0) or die("Couldn't create socket \n");
-
+$ip=gethostbyname(gethostname());
 echo "Socket created \n";
 
 // Bind the source address
-socket_bind($sock, "localhost" , 9999) or die("Could not bind socket : \n");
+socket_bind($sock, $ip , 9999) or die("Could not bind socket : \n");
 
 
 echo "Socket bind OK \n";
