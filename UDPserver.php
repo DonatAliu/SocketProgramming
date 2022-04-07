@@ -5,7 +5,7 @@ error_reporting(~E_WARNING);
 
 //Create a UDP socket
 $sock = socket_create(AF_INET, SOCK_DGRAM, 0) or die("Couldn't create socket \n");
-$ip=gethostbyname(gethostname());
+$ip="127.0.0.1";
 echo "Socket created \n";
 
 // Bind the source address
