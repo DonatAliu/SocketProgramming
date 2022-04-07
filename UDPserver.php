@@ -37,7 +37,7 @@ while(true)
 function read(){
     echo "read";
 }
-function write(){
+function write($filename,$recvtxt){
     if (hasAccess($hotsname)){
         $myfile = fopen($filename,"w+") or die("Unable to open file!");
         $txt = $recvtxt;
