@@ -3,6 +3,7 @@
 //Reduce errors
 error_reporting(~E_WARNING);
 
+
 //Create a UDP socket
 $sock = socket_create(AF_INET, SOCK_DGRAM, 0) or die("Couldn't create socket \n");
 $ip="127.0.0.1";
@@ -16,7 +17,7 @@ echo "Socket bind OK \n";
 
 //Do some communication, this loop can handle multiple clients
 
-while(1)
+while(true)
 {
 	echo "Waiting for data ... \n";
 	
@@ -38,11 +39,22 @@ function read(){
 }
 function write(){
     if (hasAccess($hotsname)){
-    echo "write";
+        $myfile = fopen($filename,"w+") or die("Unable to open file!");
+        $txt = $recvtxt;
+        fwrite($myfile, $txt);
+        fclose($myfile);
+    }
+    else{
+        echo "You dont have access to write file";
     }
 }
 function hasAccess($hostname){
-    return true;
+
+    if($hostname =="DESKTOP-B05K7P4"){
+        return true;
+    }
+    else
+    return false;
 }
 
 socket_close($sock);

@@ -10,13 +10,12 @@ error_reporting(~E_WARNING);
 $server = "127.0.0.1";
 $port = 9999;
 
-$sock = socket_create(AF_INET, SOCK_DGRAM, 0) or     
- die("Couldn't create socket: [$errorcode] $errormsg \n");
+$sock = socket_create(AF_INET, SOCK_DGRAM, 0) or die("Couldn't create socket: [$errorcode] $errormsg \n");
 
 echo "Socket created \n";
 
 //Communication loop
-while(1)
+while(true)
 {
 	//Take some input to send
 	echo 'Enter a message to send : ';
