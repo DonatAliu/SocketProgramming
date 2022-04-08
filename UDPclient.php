@@ -7,7 +7,7 @@
 //Reduce errors
 error_reporting(~E_WARNING);
 
-$server = "127.0.0.1";
+$server = "172.16.0.15";
 $port = 9999;
 
 if(!($sock = socket_create(AF_INET, SOCK_DGRAM, 0)))
