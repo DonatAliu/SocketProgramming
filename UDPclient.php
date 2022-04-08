@@ -10,7 +10,13 @@ error_reporting(~E_WARNING);
 $server = "127.0.0.1";
 $port = 9999;
 
-$sock = socket_create(AF_INET, SOCK_DGRAM, 0) or die("Couldn't create socket: [$errorcode] $errormsg \n");
+if(!($sock = socket_create(AF_INET, SOCK_DGRAM, 0)))
+{
+    $errorcode = socket_last_error();
+    $errormsg = socket_strerror($errorcode);
+
+    die("Couldn't create socket: [$errorcode] $errormsg \n");
+}
 
 echo "Socket created \n";
 
