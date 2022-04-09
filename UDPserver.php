@@ -48,7 +48,12 @@ function read($filename){
     $file="./$filename";
     if(file_exists($file)){
         $document=file_get_contents($file);
-        return $document."\n";
+        if($document){
+        return "Content of $filename: ".$document."\n";
+        }
+        else{
+            return "$filename has no content.\n";
+        }
     }
     else{
         return "file doesn't exist \n";
