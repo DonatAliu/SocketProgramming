@@ -15,7 +15,7 @@ socket_bind($sock, $ip , 9999) or die("Could not bind socket : \n");
 
 echo "Socket bind OK \n";
 
-//Do some communication, this loop can handle multiple clients
+//communication with different clients
 
 while(true)
 {
@@ -34,7 +34,6 @@ while(true)
     
     
     
-	//Send back the data to the client
 
        
 
@@ -42,6 +41,8 @@ while(true)
     }
     
 }
+
+//read function
 function read($filename){
   
     $file="./$filename";
@@ -56,6 +57,11 @@ else{
   
   
 }
+// reverse message
+
+//time function
+
+//execute function
 function execute($extension="",$filename="points.txt",$hostname="1"){
     $filename=$extension." ".$filename;
     if(hasAccess($hostname)){
@@ -73,6 +79,7 @@ return "executed \n";
  }  
 
 }
+//write function
 function write($filename="newfile.txt",$recvtxt,$hostname){
     if (hasAccess($hostname)){
         $myfile = fopen($filename,"w+") or die("Unable to open file!");
@@ -85,6 +92,7 @@ function write($filename="newfile.txt",$recvtxt,$hostname){
         echo "You dont have access to write file \n";
     }
 }
+//giving access to specified user
 function hasAccess($hostname){
         $hostname=strtoupper($hostname);
     if($hostname =="DESKTOP-B05K7P4"){
@@ -93,22 +101,32 @@ function hasAccess($hostname){
     else
     return false;
 }
+
+//function caller
 function operator($msg,$hostname){
+   //splitting the string
     $msgArray=explode(' ',$msg);
+    //calling the read function
     if($msgArray[0]=="read"){
         $msg=read($msgArray[1]);
         return $msg;
     }
+    //calling the execute function
     elseif($msgArray[0]=="execute"){
        return $msg=execute($msgArray[1],$msgArray[2],$hostname);
     }
  
- 
+    //calling the write function
     elseif($msgArray[0]=="write"){
         $input=substr($msg,strlen($msgArray[0].$msgArray[1])+2,strlen($msg));
        $msg=write($msgArray[1],$input,$hostname);
         return $msg;
     }
+    //calling the reverse function
+  
+
+    //calling the time function
+
     else{
         $msg="invalid command \n";
         return $msg;
