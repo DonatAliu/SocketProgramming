@@ -7,7 +7,7 @@
 //Reduce errors
 error_reporting(~E_WARNING);
 
-$server = "172.16.0.15";
+$server = "192.168.178.39";
 $port = 9999;
 
 if(!($sock = socket_create(AF_INET, SOCK_DGRAM, 0)))
@@ -26,9 +26,11 @@ while(true)
 	//Take some input to send
 	echo 'Enter a message to send : ';
 	$input = fgets(STDIN);
+	$input=strtolower($input);
+	$msg=utf8_encode($input);
 	
 	//Send the message to the server
-	if( ! socket_sendto($sock, $input , strlen($input) , 0 , $server , $port))
+	if( ! socket_sendto($sock, $msg , strlen($msg) , 0 , $server , $port))
 	{
 		$errorcode = socket_last_error();
 		$errormsg = socket_strerror($errorcode);
