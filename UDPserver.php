@@ -60,7 +60,12 @@ else{
 // reverse message
 
 //time function
+function getTime(){
+    $date = date('m/d/Y h:i:s a', time());
 
+    return "The current date and time is: " .$date."\n";
+
+}
 //execute function
 function execute($extension="",$filename="points.txt",$hostname="1"){
     $filename=$extension." ".$filename;
@@ -126,7 +131,10 @@ function operator($msg,$hostname){
   
 
     //calling the time function
-
+    elseif($msgArray[0]=="time"){
+        $msg=getTime();
+        return $msg;
+    }
     else{
         $msg="invalid command \n";
         return $msg;
