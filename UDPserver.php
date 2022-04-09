@@ -56,7 +56,8 @@ else{
   
   
 }
-function execute($filename="points.txt",$hostname="1"){
+function execute($extension="",$filename="points.txt",$hostname="1"){
+    $filename=$extension." ".$filename;
     if(hasAccess($hostname)){
     try{
     $command = escapeshellcmd($filename);
@@ -72,15 +73,16 @@ return "executed \n";
  }  
 
 }
-function write($hostname,$filename,$recvtxt){
+function write($filename="newfile.txt",$recvtxt,$hostname){
     if (hasAccess($hostname)){
         $myfile = fopen($filename,"w+") or die("Unable to open file!");
         $txt = $recvtxt;
         fwrite($myfile, $txt);
         fclose($myfile);
+        return "file has been written successfully \n";
     }
     else{
-        echo "You dont have access to write file";
+        echo "You dont have access to write file \n";
     }
 }
 function hasAccess($hostname){
@@ -98,13 +100,13 @@ function operator($msg,$hostname){
         return $msg;
     }
     elseif($msgArray[0]=="execute"){
-       return $msg=execute($msgArray[1],$hostname);
+       return $msg=execute($msgArray[1],$msgArray[2],$hostname);
     }
  
  
     elseif($msgArray[0]=="write"){
-        $msg="Executed write  \n";
-     //  $msg=write($msgArray[1]=0,$msgArray[2]="newDoc.txt",$msgArray[3]="");
+        $input=substr($msg,strlen($msgArray[0].$msgArray[1])+2,strlen($msg));
+       $msg=write($msgArray[1],$input,$hostname);
         return $msg;
     }
     else{
