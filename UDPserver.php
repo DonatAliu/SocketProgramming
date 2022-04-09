@@ -19,45 +19,48 @@ echo "Socket bind OK \n";
 
 while(true)
 {
-	echo "Waiting for data ... \n";
-	
-	
+    echo "Waiting for data ... \n";
+
+
     //Receive some data
-	$r = socket_recvfrom($sock, $buf, 512, 0, $remote_ip, $remote_port);
-	if($r){
-    $msg=utf8_decode($buf);
-    echo "$remote_ip : $remote_port -- " . $msg;
-    $longHostname=gethostbyaddr($remote_ip);
-    $hostname=substr($longHostname,0,15);
-    $msg=operator($msg,$hostname);
+    $r = socket_recvfrom($sock, $buf, 512, 0, $remote_ip, $remote_port);
+    if($r){
+        $msg=utf8_decode($buf);
+        echo "$remote_ip : $remote_port -- " . $msg;
+        $longHostname=gethostbyaddr($remote_ip);
+        $hostname=substr($longHostname,0,15);
+        $msg=operator($msg,$hostname);
         socket_sendto($sock, $msg , 512 , 0 , $remote_ip , $remote_port);
-    
-    
-    
 
-       
 
-        
+
+
+
+
+
     }
-    
+
 }
 
 //read function
 function read($filename){
-  
+
     $file="./$filename";
     if(file_exists($file)){
-  $document=file_get_contents($file);
-  return $document."\n";
-}
-else{
-    return "file doesn't exist \n";
-}
+        $document=file_get_contents($file);
+        return $document."\n";
+    }
+    else{
+        return "file doesn't exist \n";
+    }
 
-  
-  
+
+
 }
 // reverse message
+function reverse ($msg){
+    return strrev($msg)."\n";
+}
 
 //time function
 function getTime(){
@@ -70,18 +73,18 @@ function getTime(){
 function execute($extension="",$filename="points.txt",$hostname="1"){
     $filename=$extension." ".$filename;
     if(hasAccess($hostname)){
-    try{
-    $command = escapeshellcmd($filename);
-    $output = shell_exec($command);
-}
-catch(Exception $e){
-    echo $e;
-}
-return "executed \n";
-}
- else{
-     return "You do not have permission to execute files \n";
- }  
+        try{
+            $command = escapeshellcmd($filename);
+            $output = shell_exec($command);
+        }
+        catch(Exception $e){
+            echo $e;
+        }
+        return "executed \n";
+    }
+    else{
+        return "You do not have permission to execute files \n";
+    }
 
 }
 //write function
@@ -99,17 +102,17 @@ function write($filename="newfile.txt",$recvtxt,$hostname){
 }
 //giving access to specified user
 function hasAccess($hostname){
-        $hostname=strtoupper($hostname);
+    $hostname=strtoupper($hostname);
     if($hostname =="DESKTOP-B05K7P4"){
         return true;
     }
     else
-    return false;
+        return false;
 }
 
 //function caller
 function operator($msg,$hostname){
-   //splitting the string
+    //splitting the string
     $msgArray=explode(' ',$msg);
     //calling the read function
     if($msgArray[0]=="read"){
@@ -118,17 +121,21 @@ function operator($msg,$hostname){
     }
     //calling the execute function
     elseif($msgArray[0]=="execute"){
-       return $msg=execute($msgArray[1],$msgArray[2],$hostname);
+        return $msg=execute($msgArray[1],$msgArray[2],$hostname);
     }
- 
+
     //calling the write function
     elseif($msgArray[0]=="write"){
         $input=substr($msg,strlen($msgArray[0].$msgArray[1])+2,strlen($msg));
-       $msg=write($msgArray[1],$input,$hostname);
+        $msg=write($msgArray[1],$input,$hostname);
         return $msg;
     }
     //calling the reverse function
-  
+    elseif($msgArray[0]=="reverse"){
+        $input=substr($msg,strlen($msgArray[0])+1,strlen($msg));
+        $msg=reverse($input);
+        return $msg;
+    }
 
     //calling the time function
     elseif($msgArray[0]=="time"){
