@@ -44,7 +44,6 @@ while(true)
 
 //read function
 function read($filename){
-
     $file="./$filename";
     if(file_exists($file)){
         $document=file_get_contents($file);
@@ -119,6 +118,7 @@ function hasAccess($hostname){
 function operator($msg,$hostname){
     //splitting the string
     $msgArray=explode(' ',$msg);
+    
     //calling the read function
     if($msgArray[0]=="read"){
         $msg=read($msgArray[1]);
@@ -148,7 +148,7 @@ function operator($msg,$hostname){
         return $msg;
     }
     else{
-        $msg="invalid command \n";
+        $msg="'$msg' is an invalid command \n";
         return $msg;
     }
 }

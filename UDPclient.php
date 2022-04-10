@@ -9,7 +9,7 @@ error_reporting(~E_WARNING);
 $server = "192.168.178.39";
 //server port
 $port = 9999;
-//handling errors if the accrued during the creation of the socket
+//handling errors if they accrue during the creation of the socket
 if(!($sock = socket_create(AF_INET, SOCK_DGRAM, 0)))
 {
     $errorcode = socket_last_error();
