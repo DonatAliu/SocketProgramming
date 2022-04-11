@@ -4,8 +4,16 @@
 error_reporting(~E_WARNING);
 
 
+
 //Create a UDP socket
-$sock = socket_create(AF_INET, SOCK_DGRAM, 0) or die("Couldn't create socket \n");
+if(!($sock = socket_create(AF_INET, SOCK_DGRAM, 0)))
+{
+    $errorcode = socket_last_error();
+    $errormsg = socket_strerror($errorcode);
+
+    die("Couldn't create socket: [$errorcode] $errormsg \n");
+}
+
 $ip="192.168.178.39";
 echo "Socket created \n";
 
@@ -76,15 +84,17 @@ function getTime(){
 //execute function
 function execute($extension="",$filename="",$hostname="1"){
     $filename=$extension." ".$filename;
+    
     if(hasAccess($hostname)){
         try{
             $command = escapeshellcmd($filename);
             $output = shell_exec($command);
+            return "executed \n";
         }
         catch(Exception $e){
-            echo $e;
+            return $e;
         }
-        return "executed \n";
+        
     }
     else{
         return "You do not have permission to execute files \n";
@@ -92,8 +102,9 @@ function execute($extension="",$filename="",$hostname="1"){
 
 }
 //write function
-function write($filename="newfile.txt",$recvtxt,$hostname){
+function write($filename="newfile.txt",$recvtxt="",$hostname){
     if (hasAccess($hostname)){
+    
         $myfile = fopen($filename,"w+") or die("Unable to open file!");
         $txt = $recvtxt;
         fwrite($myfile, $txt);
@@ -148,7 +159,7 @@ function operator($msg,$hostname){
         return $msg;
     }
     else{
-        $msg="'$msg' is an invalid command \n";
+        $msg=$msg." is an invalid command\n";
         return $msg;
     }
 }
