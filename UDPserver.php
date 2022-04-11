@@ -74,7 +74,7 @@ function getTime(){
 
 }
 //execute function
-function execute($extension="",$filename="points.txt",$hostname="1"){
+function execute($extension="",$filename="",$hostname="1"){
     $filename=$extension." ".$filename;
     if(hasAccess($hostname)){
         try{
