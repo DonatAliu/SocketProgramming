@@ -118,7 +118,7 @@ function write($filename="newfile.txt",$recvtxt="",$hostname){
 //giving access to specified user
 function hasAccess($hostname){
     $hostname=strtoupper($hostname);
-    if($hostname =="DESKTOP-B05K7P4"){
+    if($hostname =="DESKTOP-B05K7P8"){
         return true;
     }
     else
