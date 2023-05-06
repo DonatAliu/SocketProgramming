@@ -3,9 +3,6 @@
 # Siguria-E-Te-Dhenave-Gr20
 ## Universiteti i Prishtinës - Fakulteti i Inxhinierisë Elektrike dhe Kompjuterike
 ### Departamenti i Inxhinierisë Kompjuterike
-<pre> UDP Client/Server socket programming using PHP</pre>
-<pre> Studentët: Albulena Makolli, Albin Shabani dhe Donat Aliu - Grupi 20 </pre>                 
-<pre> Profesori: PhD.c Mërgim Hoti </pre>
 
 
 
